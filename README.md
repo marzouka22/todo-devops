@@ -1,59 +1,69 @@
 # Todo App — Mini Projet DevOps
 
-Application de gestion de tâches (Todo List) — projet support pour la chaîne DevOps complète.
+[![CI](https://github.com/marzouka22/todo-devops/actions/workflows/ci.yml/badge.svg)](https://github.com/marzouka22/todo-devops/actions)
+![Docker](https://img.shields.io/badge/docker-ready-blue)
+![Kubernetes](https://img.shields.io/badge/k8s-deployed-326ce5)
+![SonarCloud](https://img.shields.io/badge/sonarcloud-analyzed-orange)
 
-## Architecture
-
-```
-todo-app/
-├── frontend/        # React + Vite
-├── backend/         # Node.js + Express
-├── docker/          # Dockerfiles (à compléter)
-├── k8s/             # Manifests Kubernetes (à compléter)
-└── .github/
-    └── workflows/   # Pipelines CI/CD (à compléter)
-```
+Application de gestion de tâches (Todo List) industrialisée via une chaîne DevOps complète.
 
 ## Stack technique
 
-| Couche     | Technologie          |
-|------------|----------------------|
-| Frontend   | React 18 + Vite      |
-| Backend    | Node.js + Express    |
-| Tests      | Jest + Supertest     |
-| Métriques  | Prometheus (prom-client) |
+- **Frontend** : React 18 + Vite + Nginx
+- **Backend** : Node.js + Express
+- **Stockage** : In-memory
+- **CI/CD** : GitHub Actions + ArgoCD
+- **Sécurité** : Trivy + npm audit + SonarCloud
+- **Monitoring** : Prometheus + Grafana
+- **Orchestration** : Kubernetes (Minikube)
 
-## Endpoints API
+## Architecture
+git push → GitHub Actions (CI)
+→ lint + tests + SonarQube + Trivy
+→ Docker build + push
+→ update k8s manifests
+→ ArgoCD sync automatique
+→ Kubernetes (Minikube)
+→ Prometheus + Grafana
 
-| Méthode | Route          | Description              |
-|---------|----------------|--------------------------|
-| GET     | /todos         | Lister toutes les tâches |
-| POST    | /todos         | Créer une tâche          |
-| PUT     | /todos/:id     | Modifier une tâche       |
-| DELETE  | /todos/:id     | Supprimer une tâche      |
-| GET     | /health        | Health check             |
-| GET     | /metrics       | Métriques Prometheus     |
+## Structure du projet
+todo-devops/
+├── backend/        ← Node.js + Express + tests Jest
+├── frontend/       ← React + Vite + Nginx
+├── docker/         ← docker-compose.yml
+├── k8s/            ← manifests Kubernetes
+├── .github/        ← pipeline CI/CD
+└── monitoring/     ← Prometheus + Grafana
 
-## Lancer le projet en local
+## Démarrage local
 
-### Backend
 ```bash
-cd backend
-npm install
-npm run dev
-# → http://localhost:3001
+# Backend
+cd backend && npm install && npm start
+
+# Frontend
+cd frontend && npm install && npm run dev
 ```
 
-### Frontend
+## Démarrage Docker
+
 ```bash
-cd frontend
-npm install
-npm run dev
-# → http://localhost:3000
+cd docker && docker compose up --build
+# Frontend → http://localhost:8080
+# Backend  → http://localhost:3001/todos
 ```
 
-### Tests
-```bash
-cd backend
-npm test
-```
+## Pipeline CI/CD
+
+Voir `.github/workflows/ci.yml`
+
+- Lint (ESLint)
+- Tests (Jest + coverage)
+- Analyse qualité (SonarCloud)
+- Scan sécurité (Trivy + npm audit)
+- Build + push Docker
+- Déploiement automatique via ArgoCD
+
+## Auteur
+
+Salim Marzouka — IT Business School
