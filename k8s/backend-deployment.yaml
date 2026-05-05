@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: marzouka22/todo-backend:latest
+          image: slim2001/todo-backend:latest
           ports:
             - containerPort: 3001
           resources:
