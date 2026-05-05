@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: marzouka22/todo-frontend:latest
+          image: slim2001/todo-frontend:latest
           ports:
             - containerPort: 80
           resources:
